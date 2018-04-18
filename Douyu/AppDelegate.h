@@ -10,6 +10,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
+@property(nonatomic) BOOL shouldFloatOnTop;
 
 @end
 
