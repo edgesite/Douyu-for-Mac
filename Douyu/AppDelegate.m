@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+static NSString* const PREF_KEY_SHOULD_FLOAT_ON_TOP = @"shouldFloatOnTop";
+
 @interface AppDelegate ()
 
 @end
@@ -15,9 +17,8 @@
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
+    [[NSUserDefaults standardUserDefaults] boolForKey:PREF_KEY_SHOULD_FLOAT_ON_TOP];
 }
-
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
@@ -35,6 +36,24 @@
         [theApplication.windows.firstObject makeKeyAndOrderFront:self];
     }
     return YES;
+}
+
+- (IBAction)onMenuAction:(id)sender {
+    NSMenuItem* item = (NSMenuItem*)sender;
+    if ([item.identifier isEqualToString:@"FLOAT_ON_TOP"]) {
+        if (item.state == NSOnState) {
+            _shouldFloatOnTop = NO;
+            [item setState:NSOffState];
+        } else {
+            _shouldFloatOnTop = YES;
+            [item setState:NSOnState];
+        }
+        [[NSUserDefaults standardUserDefaults] setBool:_shouldFloatOnTop forKey:PREF_KEY_SHOULD_FLOAT_ON_TOP];
+        NSWindow* window = NSApplication.sharedApplication.keyWindow;
+        if (window != nil) {
+            [window setLevel:(_shouldFloatOnTop ? NSFloatingWindowLevel : NSNormalWindowLevel)];
+        }
+    }
 }
 
 @end

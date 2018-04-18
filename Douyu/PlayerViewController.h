@@ -11,8 +11,9 @@
 #import "DYRoomInfo.h"
 #import "BarrageRenderer.h"
 #import "MpvClientOGLView.h"
+#import "DYViewController.h"
 
-@interface PlayerViewController : NSViewController
+@interface PlayerViewController : DYViewController
 
 @property (assign, nonatomic) mpv_handle *mpv;
 @property (weak, nonatomic) IBOutlet MpvClientOGLView *glView;
